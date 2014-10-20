@@ -45,6 +45,8 @@ namespace MLedControllerTestsNs
 		// Register LED with the LED controller
 		ledController.RegisterLed(&led);
 
+		led.Flash(2000);
+
 		// Start the LED controller thread
 		ledController.Start();
 
