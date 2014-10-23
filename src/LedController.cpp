@@ -2,7 +2,7 @@
 //! @file				LedController.cpp
 //! @author				Geoffrey Hunter <gbmhunter@gmail.com> (www.mbedded.ninja)
 //! @created			2014-10-13
-//! @last-modified		2014-10-20
+//! @last-modified		2014-10-24
 //! @brief				A thread-based LED controller that is responsible for flashing LEDs that have been registered to it.
 //! @details
 //!						See README.rst in repo root dir for more info.
@@ -44,6 +44,8 @@ namespace MbeddedNinja
 	{
 		std::cout << "Thread method running." << std::endl;
 
+		LedWakeupEntry nextLedEntryToWakeupFor;
+
 		while(!this->thread->stopThread)
 		{
 
@@ -75,6 +77,8 @@ namespace MbeddedNinja
 					// Remember led
 					Led * led = (*it).led;
 
+					led->gpio->Write(0);
+
 					// Remove from list
 					this->wakeUpTimesMs.Delete(it);
 
@@ -85,13 +89,13 @@ namespace MbeddedNinja
 					ledWakeupEntry.led = led;
 					ledWakeupEntry.wakeUpTimeMs = wakeUpTimeMs;
 					// This needs to be added at the correct location!
-					this->wakeUpTimesMs.Insert(it, ledWakeupEntry);
+					this->OrderedInsert(ledWakeupEntry);
 				}
 			}
 
 			// We now have to get the next thing we need to wake up for
-			static LedWakeupEntry nextLedEntryToWakeupFor = *this->wakeUpTimesMs.Start();
 
+			nextLedEntryToWakeupFor = *this->wakeUpTimesMs.Start();
 			double timeToDelay = nextLedEntryToWakeupFor.wakeUpTimeMs - currTime;
 
 			std::cout << "Delaying thread for '" << timeToDelay << "ms'." << std::endl;
@@ -101,6 +105,22 @@ namespace MbeddedNinja
 		}
 
 		std::cout << "Thread exiting." << std::endl;
+	}
+
+	void LedController::OrderedInsert(LedWakeupEntry ledWakeupEntry)
+	{
+		List<LedWakeupEntry>::Iterator it;
+		for(it = this->wakeUpTimesMs.Start(); it != this->wakeUpTimesMs.End(); it++)
+		{
+			if(ledWakeupEntry.wakeUpTimeMs < (*it).wakeUpTimeMs)
+			{
+				// Insert before the current node pointed to by the iterator
+				this->wakeUpTimesMs.Insert(it, ledWakeupEntry);
+			}
+
+		}
+
+		this->wakeUpTimesMs.Insert(it, ledWakeupEntry);
 	}
 
 	void LedController::Start()

@@ -2,7 +2,7 @@
 //! @file				LedController.hpp
 //! @author				Geoffrey Hunter <gbmhunter@gmail.com> (www.mbedded.ninja)
 //! @created			2014-10-13
-//! @last-modified		2014-10-20
+//! @last-modified		2014-10-24
 //! @brief				A thread-based LED controller that is responsible for flashing LEDs that have been registered to it.
 //! @details
 //!						See README.rst in repo root dir for more info.
@@ -90,6 +90,8 @@ namespace MbeddedNinja
 		void LedStateChanged(Led * led);
 
 		private:
+
+		void OrderedInsert(LedWakeupEntry ledWakeupEntry);
 
 		//! @brief		The thread object for the LED controller. This runs ThreadMethod().
 		MOsalNs::Thread * thread;
