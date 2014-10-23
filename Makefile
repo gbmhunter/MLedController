@@ -3,7 +3,7 @@
 # @author 			Geoffrey Hunter <gbmhunter@gmail.com> (wwww.mbedded.ninja)
 # @edited 			n/a
 # @created			2014-10-13
-# @last-modified 	2014-10-20
+# @last-modified 	2014-10-24
 # @brief 			Makefile for Linux-based make, to compile the MLedController library, example code and run unit test code.
 # @details
 #					See README in repo root dir for more info.
@@ -13,8 +13,8 @@ SRC_OBJ_FILES := $(patsubst %.cpp,%.o,$(wildcard src/*.cpp))
 SRC_LD_FLAGS := -pthread
 SRC_CC_FLAGS := -Wall -g -c -O0 -I. -I./lib -std=c++11 -pthread
 
-DEP_LIB_PATHS := -L ../MAssert -L ../MUnitTest -L ../MHal -L ../MList
-DEP_LIBS := -l MAssert -l MUnitTest -l MHal -l MList
+DEP_LIB_PATHS := -L ../MAssert -L ../MUnitTest -L ../MOsal -L ../MHal -L ../MList
+DEP_LIBS := -l MAssert -l MUnitTest -l MOsal -l MHal -l MList
 DEP_INCLUDE_PATHS := -I../
 
 TEST_CC := g++
@@ -65,6 +65,10 @@ deps :
 	git clone https://github.com/mbedded-ninja/MAssert ../MAssert; \
 	fi;
 	$(MAKE) -C ../MAssert/ all
+	if [ ! -d ../MOsal ]; then \
+	git clone https://github.com/mbedded-ninja/MOsal ../MOsal; \
+	fi;
+	$(MAKE) -C ../MOsal/ all
 	if [ ! -d ../MHal ]; then \
 	git clone https://github.com/mbedded-ninja/MHal ../MHal; \
 	fi;
@@ -111,6 +115,7 @@ clean-deps:
 	@echo " Cleaning deps...";
 	$(MAKE) -C ../MUnitTest/ clean
 	$(MAKE) -C ../MAssert/ clean
+	$(MAKE) -C ../MOsal/ clean
 	$(MAKE) -C ../MHal/ clean
 	$(MAKE) -C ../MList/ clean
 	

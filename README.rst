@@ -11,8 +11,8 @@ A microcontroller friendly C++ module to flash your LEDs (and other things).
 
 - Author: gbmhunter <gbmhunter@gmail.com> (www.mbedded.ninja)
 - First Ever Commit: 2014-10-13
-- Last Modified: 2014-10-20
-- Version: v1.1.0.0
+- Last Modified: 2014-10-24
+- Version: v1.1.1.0
 - Company: mbedded.ninja
 - Project: MToolkit Module
 - Language: C++
@@ -75,6 +75,7 @@ Changelog
 ========= ========== ===================================================================================================
 Version   Date       Comment
 ========= ========== ===================================================================================================
+v1.1.1.0  2014-10-24 Fixed Makefile dependency include for MOsal to try and fix TravisCI build error, closes #4.
 v1.1.0.0  2014-10-20 Fixed module name in README, closes #2. Add MOsal to the list of dependencies listed in the README, closes #3. Added a better description about MLedController to the README. Added MList as a dependency of this module. Add functionality so that an LED can be flashed at an arbitrary flash rate, closes #1.
 v1.0.0.0  2014-10-14 Initial commit, LedController and Led objects implemented, Led registration with LedController works correctly, and LedController thread works correctly (tested on Linux).
 ========= ========== ===================================================================================================
