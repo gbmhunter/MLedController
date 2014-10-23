@@ -13,8 +13,8 @@ SRC_OBJ_FILES := $(patsubst %.cpp,%.o,$(wildcard src/*.cpp))
 SRC_LD_FLAGS := -pthread
 SRC_CC_FLAGS := -Wall -g -c -O0 -I. -I./lib -std=c++11 -pthread
 
-DEP_LIB_PATHS := -L ../MAssert -L ../MUnitTest -L ../MOsal -L ../MHal -L ../MList
-DEP_LIBS := -l MAssert -l MUnitTest -l MOsal -l MHal -l MList
+DEP_LIB_PATHS := -L ../MAssert -L ../MUnitTest -L ../MOsal -L ../MHal -L ../MList -L ../MVector
+DEP_LIBS := -l MAssert -l MUnitTest -l MOsal -l MHal -l MList -l MVector
 DEP_INCLUDE_PATHS := -I../
 
 TEST_CC := g++
@@ -77,6 +77,10 @@ deps :
 	git clone https://github.com/mbedded-ninja/MList ../MList; \
 	fi;
 	$(MAKE) -C ../MList/ all
+	if [ ! -d ../MVector ]; then \
+	git clone https://github.com/mbedded-ninja/MVector ../MVector; \
+	fi;
+	$(MAKE) -C ../MVector/ all
 	
 # ======== TEST ========
 	
@@ -118,6 +122,7 @@ clean-deps:
 	$(MAKE) -C ../MOsal/ clean
 	$(MAKE) -C ../MHal/ clean
 	$(MAKE) -C ../MList/ clean
+	$(MAKE) -C ../MVector/ clean
 	
 clean-ut:
 	@echo " Cleaning test object files..."; $(RM) ./test/*.o

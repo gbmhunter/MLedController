@@ -12,7 +12,7 @@ A microcontroller friendly C++ module to flash your LEDs (and other things).
 - Author: gbmhunter <gbmhunter@gmail.com> (www.mbedded.ninja)
 - First Ever Commit: 2014-10-13
 - Last Modified: 2014-10-24
-- Version: v1.1.2.0
+- Version: v1.1.3.0
 - Company: mbedded.ninja
 - Project: MToolkit Module
 - Language: C++
@@ -52,6 +52,7 @@ MHal                   External module      Abstraction layer for the hardware G
 MList                  External module      Doubly-linked list container for keeping track of LedController wake-up times.
 MOsal                  External module      Abstraction layer that provides OS objects (e.g. threads and delays).
 MUnitTest              External module      Framework for unit tests.
+MVector                External module      Vector container for keeping track of all registered LEDs.
 ====================== ==================== ======================================================================
 
 Issues
@@ -75,6 +76,7 @@ Changelog
 ========= ========== ===================================================================================================
 Version   Date       Comment
 ========= ========== ===================================================================================================
+v1.1.3.0  2014-10-24 Added MVector as a dependency both to the Makefile to fix a TravisCI build error and to the README, closes #6.
 v1.1.2.0  2014-10-24 Fixed bug with static variable nextLedEntryToWakeupFor in LedController::ThreadMethod() which causes the thread to sleep for the wrong time periods, closes #5.
 v1.1.1.0  2014-10-24 Fixed Makefile dependency include for MOsal to try and fix TravisCI build error, closes #4.
 v1.1.0.0  2014-10-20 Fixed module name in README, closes #2. Add MOsal to the list of dependencies listed in the README, closes #3. Added a better description about MLedController to the README. Added MList as a dependency of this module. Add functionality so that an LED can be flashed at an arbitrary flash rate, closes #1.
